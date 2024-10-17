@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
-const ProductImagePreview = ({ images = []}) => {
+const ProductImagePreview = ({ images = [] }) => {
   const [mainImage, setMainImage] = useState("");
 
   useEffect(() => {

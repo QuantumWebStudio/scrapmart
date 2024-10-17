@@ -29,7 +29,7 @@ const ProductPage = () => {
   }, []);
 
   return (
-    <section className="h-auto">
+    <section className="h-auto pb-4 bg-gradient-to-br from-green-400 via-blue-500 to-green-600">
       {singleProduct && (
         <div className="flex-col flex justify-center items-center gap-2 lg:flex-row">
           <ProductImagePreview images={singleProduct.images} />

@@ -8,7 +8,6 @@ import Image from "next/image";
 // this fucntion is used to display individual cart items in the page by feching from the API
 
 const CartDetails = ({ cart, remove }) => {
-  console.log(cart);
   return (
     <div className=" border flex flex-row   justify-center items-center">
       {/* This div contains the image and video of the  cart item */}
