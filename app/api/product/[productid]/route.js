@@ -1,7 +1,12 @@
 import { connectToDatabase } from "@utils/connectDataBase";
 import { NextResponse } from "next/server";
 import Product from "@model/productModel";
-
+import { connectCloudinary } from "@utils/connectCloudnary";
+import {
+  videoUpload,
+  imageUpload,
+  removeFile,
+} from "@helpers/cloudnaryOperations";
 // Ensure the database is connected
 connectToDatabase();
 
@@ -16,6 +21,39 @@ export const GET = async (request, { params }) => {
       return NextResponse.json(
         {
           singleProductDetail: getProduct,
+        },
+        { status: 200 }
+      );
+    } catch (error) {
+      console.error("Error fetching product:", error);
+
+      // Return a 500 error response if there's an internal server error
+      return NextResponse.json(
+        {
+          error: "Internal Server Error",
+        },
+        { status: 500 }
+      );
+    }
+  } catch (error) {
+    console.error("Error fetching product:", error);
+  }
+};
+
+export const POST = async (request) => {
+  try {
+    connectCloudinary();
+    const data = await request.formData();
+    const productName = data.get("productName");
+    const productImage = data.get("productImage");
+    // const productVideo = data.get("productVideo");
+    const imageData = await imageUpload(productImage);
+    // const videoData = await videoUpload(productVideo);
+    console.log(imageData);
+    try {
+      return NextResponse.json(
+        {
+          singleProductDetail: productName,
         },
         { status: 200 }
       );
