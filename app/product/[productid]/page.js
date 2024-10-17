@@ -1,7 +1,9 @@
 "use client";
 import ProductImagePreview from "@components/ProductImagePreview";
+import SingleProductDetail from "@components/SingleProductDetail";
 import axios from "axios";
 import { useParams } from "next/navigation";
+
 import { useEffect, useState } from "react";
 
 const ProductPage = () => {
@@ -24,20 +26,14 @@ const ProductPage = () => {
 
   useEffect(() => {
     fetchSingleProduct(productid);
-  },[]);
-  console.log("From Single Resoire", singleProduct);
+  }, []);
 
   return (
-    <section className="h-dvh border">
+    <section className="h-auto">
       {singleProduct && (
-        <div>
-          <ProductImagePreview
-            images={singleProduct.images}
-            display={display}
-          />
-          <div>
-            <h2>{singleProduct.name}</h2>
-          </div>
+        <div className="flex-col flex justify-center items-center gap-2 lg:flex-row">
+          <ProductImagePreview images={singleProduct.images} />
+          <SingleProductDetail product={singleProduct} />
         </div>
       )}
     </section>
