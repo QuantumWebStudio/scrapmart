@@ -17,7 +17,7 @@ const SingleProductDetail = ({ product }) => {
     alert("button clicked");
 
     //This is used to create a from data  object to send it to backend
-    alert("loading")
+    alert("loading");
     const formData = new FormData();
     formData.append("productId", product._id);
     formData.append("productName", product.productName);
@@ -33,25 +33,26 @@ const SingleProductDetail = ({ product }) => {
     if (ProductVideo) {
       formData.append("productVideo", ProductVideo);
     }
-    alert("Form data has been loadded")
+    alert("Form data has been loadded");
     //This is used to send the data from frontend to backend
     try {
-      alert("Sending req")
+      alert("Sending req");
       const response = await axios.post(`/api/product/${productid}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      alert("REQ sent")
+      alert("REQ sent");
       const data = await response.data;
       console.log("FROM DATA", data);
+      alert("from data  ");
       if (data) {
         router.push("/cart");
-        alert("from data", data.msg);
+        alert("from data");
       }
     } catch (err) {
       console.error("Frm err", err);
-      alert("catch", err.data.msg);
+      alert("catch");
     }
   };
 
