@@ -30,7 +30,7 @@ const SingleProductDetail = ({ product }) => {
       }
     } catch (err) {
       console.error("Frm err", err);
-      alert(`from catch ${err.response.data.msg}`);
+      alert(`from catch ${err}`);
     }
   };
 
