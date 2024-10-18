@@ -110,10 +110,3 @@ export const POST = async (request) => {
 };
 
 // Add the config here, at the end of the file
-export const config = {
-  api: {
-    bodyParser: {
-      sizeLimit: "50mb", // Set body size limit to 50MB
-    },
-  },
-};
