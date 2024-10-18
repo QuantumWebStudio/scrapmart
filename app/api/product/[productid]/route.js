@@ -4,7 +4,7 @@ import Product from "@model/productModel";
 import Cart from "@model/cartModel";
 
 //This is used to conect the cloudnary platform
-import { connectCloudinary } from "@utils/connectCloudnary";
+
 
 //This is used to upload the files into the cloudinary and the uploaded url is stored in the cart database
 import {
@@ -50,7 +50,7 @@ export const POST = async (request) => {
   console.log("The POST Function is being Callllled");
   try {
     //this call is done to connect with the cloudinary platform
-    connectCloudinary();
+    
 
     //Extracting or dsctructring the variables inside the formData
     const data = await request.formData();

@@ -12,7 +12,29 @@ const SingleProductDetail = ({ product }) => {
   const [ProductImage, setProductImage] = useState(null);
   const [ProductVideo, setProductVideo] = useState(null);
 
-  const sendToCart = async (e) => {
+  const sendBackend = async (formData) => {
+    try {
+      alert("Sending req");
+      const response = await axios.post(`/api/product/${productid}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      alert("REQ sent");
+      const data = await response.data;
+      console.log("FROM DATA", data.msg);
+      alert(data.msg);
+      if (response.status === 200) {
+        alert("from data");
+        router.push("/cart");
+      }
+    } catch (err) {
+      console.error("Frm err", err);
+      alert(`from catch ${err.response.data.msg}`);
+    }
+  };
+
+  const sendToCart = (e) => {
     e.preventDefault();
     alert("button clicked");
 
@@ -35,25 +57,7 @@ const SingleProductDetail = ({ product }) => {
     }
     alert("Form data has been loadded");
     //This is used to send the data from frontend to backend
-    try {
-      alert("Sending req");
-      const response = await axios.post(`/api/product/${productid}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      alert("REQ sent");
-      const data = await response.data;
-      console.log("FROM DATA", data);
-      alert("from data  ");
-      if (data) {
-        router.push("/cart");
-        alert("from data");
-      }
-    } catch (err) {
-      console.error("Frm err", err);
-      alert("catch");
-    }
+    sendBackend(formData);
   };
 
   return (

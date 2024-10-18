@@ -1,8 +1,10 @@
+import { connectCloudinary } from "@utils/connectCloudnary";
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
 
 //Used to upload the video file to the cloudinary
 const videoUpload = async (file) => {
+  connectCloudinary();
   const buffer = await file.arrayBuffer();
   const bytes = Buffer.from(buffer);
   return new Promise(async (resolve, reject) => {
@@ -25,6 +27,7 @@ const videoUpload = async (file) => {
 
 //Used to upload the image file to the cloudinary
 const imageUpload = async (file) => {
+  connectCloudinary();
   const buffer = await file.arrayBuffer();
   const bytes = Buffer.from(buffer);
   return new Promise(async (resolve, reject) => {
@@ -44,8 +47,6 @@ const imageUpload = async (file) => {
       .end(bytes);
   });
 };
-
-
 
 //This is used to remove the files  from the local storage that is /pblic/tem after sucessfully being uploaded into the cloudinary
 
