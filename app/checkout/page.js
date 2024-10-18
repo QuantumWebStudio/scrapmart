@@ -1,9 +1,15 @@
-import React from 'react'
+import DisplayCheckoutDetail from "@components/DisplayCheckoutDetail";
+import DisplayCheckoutFile from "@components/DisplayCheckoutFile";
 
-const page = () => {
+import React from "react";
+
+const CheckoutPage = () => {
   return (
-    <div>page</div>
-  )
-}
+    <section className="h-dvh flex flex-col sm:flex-row justify-center items-center">
+      <DisplayCheckoutFile />
+      <DisplayCheckoutDetail />
+    </section>
+  );
+};
 
-export default page
+export default CheckoutPage;

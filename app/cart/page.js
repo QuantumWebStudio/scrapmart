@@ -5,7 +5,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const Cart = () => {
+const CartPage = () => {
   const router = useRouter();
 
   const [cartDetail, setCartDetail] = useState([]);
@@ -57,4 +57,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default CartPage;

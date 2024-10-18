@@ -3,7 +3,7 @@ import { useState } from "react";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import Link from "next/link";
 
-export default function Register() {
+export default function RegisterPage() {
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",

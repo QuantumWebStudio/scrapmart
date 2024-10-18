@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { EyeIcon, EyeOffIcon } from 'lucide-react'
 
-export default function Login() {
+export default function LoginPage() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',

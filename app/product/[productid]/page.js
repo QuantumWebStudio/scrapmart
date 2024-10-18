@@ -6,7 +6,7 @@ import { useParams } from "next/navigation";
 
 import { useEffect, useState } from "react";
 
-const ProductPage = () => {
+const SingleProductPage = () => {
   const [singleProduct, setSingleProduct] = useState({});
   
 
@@ -39,4 +39,4 @@ const ProductPage = () => {
   );
 };
 
-export default ProductPage;
+export default SingleProductPage;

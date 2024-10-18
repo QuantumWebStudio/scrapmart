@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 
 import axios from "axios";
 
-const page = () => {
+const ProductsPage = () => {
   const [categorySelected, setCategory] = useState("All Items");
   const [filteredProducts, setFiteredProducts] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
@@ -67,4 +67,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default ProductsPage;
