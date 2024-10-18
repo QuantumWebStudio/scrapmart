@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 
 const ProductPage = () => {
   const [singleProduct, setSingleProduct] = useState({});
-  const [display, setDisplay] = useState(null);
+  
 
   //This is used to extract the dynamic id from the url
   const { productid } = useParams();
@@ -21,7 +21,6 @@ const ProductPage = () => {
     });
     const data = await response.data;
     setSingleProduct(data.singleProductDetail);
-    setDisplay(data.singleProductDetail.images[0]);
   };
 
   useEffect(() => {

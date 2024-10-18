@@ -33,9 +33,10 @@ const SingleProductDetail = ({ product }) => {
     if (ProductVideo) {
       formData.append("productVideo", ProductVideo);
     }
-
+    alert("Form data has been loadded")
     //This is used to send the data from frontend to backend
     try {
+      alert("Sending req")
       const response = await axios.post(`/api/product/${productid}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -50,7 +51,7 @@ const SingleProductDetail = ({ product }) => {
       }
     } catch (err) {
       console.error("Frm err", err);
-      alert("catch", err);
+      alert("catch", err.data.msg);
     }
   };
 

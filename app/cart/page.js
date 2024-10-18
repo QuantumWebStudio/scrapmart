@@ -1,10 +1,10 @@
 "use client";
 
 import CartDetails from "@components/CartDetails";
-
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+
 const Cart = () => {
   const router = useRouter();
 

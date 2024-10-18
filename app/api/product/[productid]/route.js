@@ -47,6 +47,7 @@ export const GET = async (request, { params }) => {
 };
 
 export const POST = async (request) => {
+  console.log("The POST Function is being Callllled");
   try {
     //this call is done to connect with the cloudinary platform
     connectCloudinary();
@@ -62,42 +63,39 @@ export const POST = async (request) => {
     const productPrice = data.get("productPrice");
     const productImage = data.get("productImage");
     const productVideo = data.get("productVideo");
-
+    
     //This function returns the uploaded status of the image and video
     const imageData = await imageUpload(productImage);
     const videoData = await videoUpload(productVideo);
-
-    try {
-      const addedItems = await await Cart.create({
-        productId,
-        productName,
-        productUnit,
-        productPrice,
-        productQuantity,
-        productDescription,
-        productCategory,
-        productImage: imageData.secure_url,
-        prodcutVideo: videoData.secure_url,
-      });
-      return NextResponse.json(
-        {
-          msg: "Item Added to Cart",
-          cartDetail: addedItems,
-        },
-        { status: 200 }
-      );
-    } catch (error) {
-      console.error("Failed to  add item to cart", error);
-
-      // Return a 500 error response if there's an internal server error
-      return NextResponse.json(
-        {
-          error: "Something went wrong!!!",
-        },
-        { status: 500 }
-      );
-    }
+    console.log("image and video is being added to the cloud")
+    console.log("item is being added to the database")
+    const addedItems = await await Cart.create({
+      productId,
+      productName,
+      productUnit,
+      productPrice,
+      productQuantity,
+      productDescription,
+      productCategory,
+      productImage: imageData.secure_url,
+      prodcutVideo: videoData.secure_url,
+    });
+    console.log("item is added to the database")
+    return NextResponse.json(
+      {
+        msg: "Item Added to Cart",
+        cartDetail: addedItems,
+      },
+      { status: 200 }
+    );
   } catch (error) {
-    console.error("Error in the server", error);
+    console.error("Failed to  add item to cart", error);
+    // Return a 500 error response if there's an internal server error
+    return NextResponse.json(
+      {
+        msg: "Something went wrong!!!",
+      },
+      { status: 500 }
+    );
   }
 };
