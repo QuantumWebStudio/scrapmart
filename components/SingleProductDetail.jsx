@@ -6,7 +6,7 @@ import { useState } from "react";
 const SingleProductDetail = ({ product }) => {
   const { productid } = useParams();
   const router = useRouter();
-  const [Quantity, setQuantity] = useState(0); // Default to 0, can remain as is
+  const [Quantity, setQuantity] = useState(1); // Default to 0, can remain as is
   const [Unit, setUnit] = useState("KG"); // Default to "KG", can remain as is
   const [Description, setDescription] = useState(""); // Initial state is an empty string
   const [ProductImage, setProductImage] = useState(null);
@@ -14,9 +14,10 @@ const SingleProductDetail = ({ product }) => {
 
   const sendToCart = async (e) => {
     e.preventDefault();
+    alert("button clicked");
 
     //This is used to create a from data  object to send it to backend
-
+    alert("loading")
     const formData = new FormData();
     formData.append("productId", product._id);
     formData.append("productName", product.productName);
@@ -40,14 +41,16 @@ const SingleProductDetail = ({ product }) => {
           "Content-Type": "multipart/form-data",
         },
       });
+      alert("REQ sent")
       const data = await response.data;
       console.log("FROM DATA", data);
       if (data) {
-        alert("Product Added to Cart");
         router.push("/cart");
+        alert("from data", data.msg);
       }
     } catch (err) {
       console.error("Frm err", err);
+      alert("catch", err);
     }
   };
 
@@ -96,8 +99,9 @@ const SingleProductDetail = ({ product }) => {
           <input
             type="number"
             id="Quantity"
+            min={0}
             value={Quantity} // Controlled input
-            onChange={(e) => setQuantity(Number(e.target.value))} // Convert to number
+            onChange={(e) => setQuantity(e.target.value)} // Convert to number
             required
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
