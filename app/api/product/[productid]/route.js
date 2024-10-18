@@ -5,7 +5,6 @@ import Cart from "@model/cartModel";
 
 //This is used to conect the cloudnary platform
 
-
 //This is used to upload the files into the cloudinary and the uploaded url is stored in the cart database
 import {
   videoUpload,
@@ -50,7 +49,6 @@ export const POST = async (request) => {
   console.log("The POST Function is being Callllled");
   try {
     //this call is done to connect with the cloudinary platform
-    
 
     //Extracting or dsctructring the variables inside the formData
     const data = await request.formData();
@@ -63,12 +61,12 @@ export const POST = async (request) => {
     const productPrice = data.get("productPrice");
     const productImage = data.get("productImage");
     const productVideo = data.get("productVideo");
-    
+
     //This function returns the uploaded status of the image and video
     const imageData = await imageUpload(productImage);
     const videoData = await videoUpload(productVideo);
-    console.log("image and video is being added to the cloud")
-    console.log("item is being added to the database")
+    console.log("image and video is being added to the cloud");
+    console.log("item is being added to the database");
     const addedItems = await await Cart.create({
       productId,
       productName,
@@ -80,7 +78,7 @@ export const POST = async (request) => {
       productImage: imageData.secure_url,
       prodcutVideo: videoData.secure_url,
     });
-    console.log("item is added to the database")
+    console.log("item is added to the database");
     return NextResponse.json(
       {
         msg: "Item Added to Cart",
@@ -93,9 +91,17 @@ export const POST = async (request) => {
     // Return a 500 error response if there's an internal server error
     return NextResponse.json(
       {
-        msg: "Something went wrong!!!",
+        msg: "failed to add item to the cart",
       },
+      error,
       { status: 500 }
     );
   }
+};
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: "50mb", // Set desired value
+    },
+  },
 };
