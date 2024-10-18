@@ -45,63 +45,75 @@ export const GET = async (request, { params }) => {
   }
 };
 
-export const POST = async (request) => {
-  console.log("The POST Function is being Callllled");
-  try {
-    //this call is done to connect with the cloudinary platform
+import { connectToDatabase } from "@utils/connectDataBase";
+import { NextResponse } from "next/server";
+import Product from "@model/productModel";
+import Cart from "@model/cartModel";
 
-    //Extracting or dsctructring the variables inside the formData
+import { videoUpload, imageUpload } from "@helpers/cloudnaryOperations";
+
+// Ensure the database is connected
+connectToDatabase();
+
+export const POST = async (request) => {
+  console.log("The POST Function is being called");
+  try {
     const data = await request.formData();
-    const productName = data.get("productName");
-    const productCategory = data.get("productCategory");
-    const productDescription = data.get("productDescription");
-    const productQuantity = data.get("productQuantity");
-    const productUnit = data.get("productUnit");
-    const productId = data.get("productId");
-    const productPrice = data.get("productPrice");
     const productImage = data.get("productImage");
     const productVideo = data.get("productVideo");
 
-    //This function returns the uploaded status of the image and video
+    // Define max file size limit (50MB)
+    const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB in bytes
+
+    // Check if the image or video exceeds the 50MB limit
+    if (productImage.size > MAX_FILE_SIZE) {
+      return NextResponse.json(
+        { msg: "Image file is too large. Max allowed size is 50MB." },
+        { status: 413 }
+      );
+    }
+
+    if (productVideo.size > MAX_FILE_SIZE) {
+      return NextResponse.json(
+        { msg: "Video file is too large. Max allowed size is 50MB." },
+        { status: 413 }
+      );
+    }
+
+    // Proceed with Cloudinary upload if files are within size limits
     const imageData = await imageUpload(productImage);
     const videoData = await videoUpload(productVideo);
-    console.log("image and video is being added to the cloud");
-    console.log("item is being added to the database");
-    const addedItems = await await Cart.create({
-      productId,
-      productName,
-      productUnit,
-      productPrice,
-      productQuantity,
-      productDescription,
-      productCategory,
+
+    const addedItems = await Cart.create({
+      productName: data.get("productName"),
+      productCategory: data.get("productCategory"),
+      productDescription: data.get("productDescription"),
+      productQuantity: data.get("productQuantity"),
+      productUnit: data.get("productUnit"),
+      productId: data.get("productId"),
+      productPrice: data.get("productPrice"),
       productImage: imageData.secure_url,
-      prodcutVideo: videoData.secure_url,
+      productVideo: videoData.secure_url,
     });
-    console.log("item is added to the database");
+
     return NextResponse.json(
-      {
-        msg: "Item Added to Cart",
-        cartDetail: addedItems,
-      },
+      { msg: "Item Added to Cart", cartDetail: addedItems },
       { status: 200 }
     );
   } catch (error) {
-    console.error("Failed to  add item to cart", error);
-    // Return a 500 error response if there's an internal server error
+    console.error("Failed to add item to cart", error);
     return NextResponse.json(
-      {
-        msg: "failed to add item to the cart",
-      },
-      error,
+      { msg: "Failed to add item to cart" },
       { status: 500 }
     );
   }
 };
+
+// Add the config here, at the end of the file
 export const config = {
   api: {
     bodyParser: {
-      sizeLimit: "50mb", // Set desired value
+      sizeLimit: "50mb", // Set body size limit to 50MB
     },
   },
 };
