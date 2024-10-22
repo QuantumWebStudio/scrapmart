@@ -12,7 +12,7 @@ const CartPage = () => {
 
   //this is used to fetch data from the api
   const fetchCartApi = async () => {
-    alert("The page refreshed")
+    alert("The page refreshed");
     try {
       const response = await axios.get(`api/cart`, {
         headers: {
@@ -21,10 +21,8 @@ const CartPage = () => {
       });
       const data = response.data;
       setCartDetail(data.cartDetails);
-      
     } catch (error) {
       console.error(error);
-      
     }
   };
 
@@ -44,8 +42,8 @@ const CartPage = () => {
           "Content-Type": "application/json",
         },
       });
-      fetchCartApi();
       alert(response.data.msg);
+      fetchCartApi();
       console.log(response.data);
     } catch (error) {
       alert(error.data.msg);
@@ -55,7 +53,9 @@ const CartPage = () => {
 
   return (
     <section className="h-auto py-3">
-      <h1 className="text-center sm:text-xl">Total items in cart {cartDetail.length}</h1>
+      <h1 className="text-center sm:text-xl">
+        Total items in cart {cartDetail.length}
+      </h1>
       <div className="grid grid-cols-1  py-4 sm:px-3 place-items-center lg:grid-cols-2 gap-1 sm:gap-2">
         {cartDetail.map((item, index) => (
           <CartDetails cart={item} key={index} remove={handleRemoveItem} />
