@@ -7,7 +7,7 @@ import Cart from "@model/cartModel";
 connectToDatabase();
 export const GET = async () => {
   try {
-    const cartItems = await Cart.find({}).sort({ createdAt: -1 });;
+    const cartItems = await Cart.find({}).sort({ createdAt:-1});;
     return NextResponse.json({
       cartDetails: cartItems,
     });
