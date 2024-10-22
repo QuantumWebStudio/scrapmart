@@ -79,8 +79,11 @@ export const POST = async (request) => {
       {
         msg: "Item Added to Cart",
         cartDetail: addedItems,
+        stat:1
       },
-      { status: 200 }
+
+      
+      
     );
   } catch (error) {
     console.error("Failed to  add item to cart", error);
@@ -88,9 +91,10 @@ export const POST = async (request) => {
     return NextResponse.json(
       {
         msg: "Could not add item to cart",
+        stat:0,
+        error
       },
-      error,
-      { status: 500 }
+      
     );
   }
 };

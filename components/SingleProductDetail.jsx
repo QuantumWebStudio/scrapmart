@@ -21,9 +21,11 @@ const SingleProductDetail = ({ product }) => {
       });
 
       const data = await response.data;
-      console.log("FROM DATA", data.msg);
+      
+      console.log("FROM DATA", data);
+
       alert(data.msg);
-      if (data.status === 200) {
+      if (data.stat === 1) {
         router.push("/cart");
       }
     } catch (err) {
@@ -151,6 +153,7 @@ const SingleProductDetail = ({ product }) => {
           <textarea
             id="Description"
             rows="3"
+            required
             value={Description} // Controlled input
             onChange={(e) => setDescription(e.target.value)}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
