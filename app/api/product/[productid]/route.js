@@ -7,12 +7,8 @@ import Cart from "@model/cartModel";
 import { connectCloudinary } from "@utils/connectCloudnary";
 
 //This is used to upload the files into the cloudinary and the uploaded url is stored in the cart database
-import {
-  videoUpload,
-  imageUpload,
-  removeFile,
-} from "@helpers/cloudnaryOperations";
-import { cartDetail } from "@Constants/data";
+import { videoUpload, imageUpload } from "@helpers/cloudnaryOperations";
+
 // Ensure the database is connected
 connectToDatabase();
 
@@ -63,12 +59,12 @@ export const POST = async (request) => {
     const productPrice = data.get("productPrice");
     const productImage = data.get("productImage");
     const productVideo = data.get("productVideo");
-    
+
     //This function returns the uploaded status of the image and video
     const imageData = await imageUpload(productImage);
     const videoData = await videoUpload(productVideo);
-    console.log("image and video is being added to the cloud")
-    console.log("item is being added to the database")
+    console.log("image and video is being added to the cloud");
+    console.log("item is being added to the database");
     const addedItems = await await Cart.create({
       productId,
       productName,
@@ -80,7 +76,7 @@ export const POST = async (request) => {
       productImage: imageData.secure_url,
       prodcutVideo: videoData.secure_url,
     });
-    console.log("item is added to the database")
+    console.log("item is added to the database");
     return NextResponse.json(
       {
         msg: "Item Added to Cart",
@@ -93,7 +89,7 @@ export const POST = async (request) => {
     // Return a 500 error response if there's an internal server error
     return NextResponse.json(
       {
-        msg: "Could not add item to cart"
+        msg: "Could not add item to cart",
       },
       error,
       { status: 500 }

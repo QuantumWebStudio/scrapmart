@@ -1,4 +1,5 @@
 "use client";
+
 import axios from "axios";
 import { useRouter, useParams } from "next/navigation";
 import { useState } from "react";
@@ -15,6 +16,7 @@ const SingleProductDetail = ({ product }) => {
   const sendBackend = async (formData) => {
     try {
       alert("Sending req");
+
       const response = await axios.post(`/api/product/${productid}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -58,6 +60,21 @@ const SingleProductDetail = ({ product }) => {
     alert("Form data has been loadded");
     //This is used to send the data from frontend to backend
     sendBackend(formData);
+  };
+
+  const sendToCheckout = () => {
+    alert("button clicked");
+
+    //The data will be stored in the local storage and will be accessed in the checkout page. As soon as the order is placed the localstorage data will be erased. just for the timing am using this. I will find  a better way to do this.
+    localStorage.setItem("productId", product._id);
+    localStorage.setItem("productName", product.productName);
+    localStorage.setItem("productCategory", product.productCategory);
+    localStorage.setItem("productQuantity", Quantity);
+    localStorage.setItem("productUnit", Unit);
+    localStorage.setItem("productDescription", Description);
+    localStorage.setItem("productImage", ProductImage);
+    localStorage.setItem("productVideo", ProductVideo);
+    localStorage.setItem("productPrice", product.productPrice);
   };
 
   return (
@@ -191,7 +208,7 @@ const SingleProductDetail = ({ product }) => {
           <button
             type="button"
             onClick={() => {
-              router.push("/checkout");
+              sendToCheckout();
             }}
             className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
           >

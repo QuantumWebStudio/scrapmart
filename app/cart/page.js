@@ -10,23 +10,37 @@ const CartPage = () => {
 
   const [cartDetail, setCartDetail] = useState([]);
 
+  //this is used to fetch data from the api
   const fetchCartApi = async () => {
     const response = await axios.get(`api/cart`, {
       headers: {
         "Content-Type": "application/json",
       },
-    })
-    const  data = response.data;
+    });
+    const data = response.data;
     setCartDetail(data.cartDetails);
-
   };
-  console.log(cartDetail)
   useEffect(() => {
     fetchCartApi();
   }, []);
 
-  const handleRemoveItem = (cartId) => {
-    console.log(`remoing item ${cartId}`);
+  console.log(cartDetail);
+
+  //this is used to remove a single item from the cart
+  const handleRemoveItem = async (cartId) => {
+    try {
+      const response = await axios.delete(`/api/cart/${cartId}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      fetchCartApi();
+      alert(response.data.msg);
+      console.log(response.data);
+    } catch (error) {
+      alert(error.data.msg);
+      console.log(error);
+    }
   };
   return (
     <section className="h-auto py-3">
