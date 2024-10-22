@@ -12,7 +12,7 @@ const CartPage = () => {
 
   //this is used to fetch data from the api
   const fetchCartApi = async () => {
-    alert("The page refreshed");
+
     try {
       const response = await axios.get(`api/cart`, {
         headers: {
@@ -20,7 +20,7 @@ const CartPage = () => {
         },
       });
       const data = response.data;
-      setCartDetail(data.cartDetails);
+      setCartDetail(data.cartDetails)
     } catch (error) {
       console.error(error);
     }
