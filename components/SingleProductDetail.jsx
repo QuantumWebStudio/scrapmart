@@ -11,7 +11,7 @@ const SingleProductDetail = ({ product }) => {
   const [Unit, setUnit] = useState("KG"); // Default to "KG", can remain as is
   const [Description, setDescription] = useState(""); // Initial state is an empty string
   const [ProductImage, setProductImage] = useState(null);
-  const [ProductVideo, setProductVideo] = useState(null);
+  // const [ProductVideo, setProductVideo] = useState(null);
 
   const sendBackend = async (formData) => {
     try {
@@ -54,9 +54,9 @@ const SingleProductDetail = ({ product }) => {
     if (ProductImage) {
       formData.append("productImage", ProductImage);
     }
-    if (ProductVideo) {
-      formData.append("productVideo", ProductVideo);
-    }
+    // if (ProductVideo) {
+    //   formData.append("productVideo", ProductVideo);
+    // }
     alert("Form data has been loadded");
     //This is used to send the data from frontend to backend
     sendBackend(formData);
@@ -73,8 +73,9 @@ const SingleProductDetail = ({ product }) => {
     localStorage.setItem("productUnit", Unit);
     localStorage.setItem("productDescription", Description);
     localStorage.setItem("productImage", ProductImage);
-    localStorage.setItem("productVideo", ProductVideo);
+    // localStorage.setItem("productVideo", ProductVideo);
     localStorage.setItem("productPrice", product.productPrice);
+    router.push("/checkout")
   };
 
   return (
@@ -180,7 +181,7 @@ const SingleProductDetail = ({ product }) => {
           />
         </div>
 
-        <div>
+        {/* <div>
           <label
             htmlFor="ProductVideo"
             className="block text-sm font-medium text-black"
@@ -194,7 +195,7 @@ const SingleProductDetail = ({ product }) => {
             onChange={(e) => setProductVideo(e.target.files[0])}
             className="mt-1 block w-full px-3 py-2 bg-black bg-opacity-50 border border-transparent rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
           />
-        </div>
+        </div> */}
 
         <div className="flex justify-center items-center space-x-4">
           <button

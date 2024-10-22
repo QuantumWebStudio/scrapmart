@@ -58,11 +58,11 @@ export const POST = async (request) => {
     const productId = data.get("productId");
     const productPrice = data.get("productPrice");
     const productImage = data.get("productImage");
-    const productVideo = data.get("productVideo");
+    // const productVideo = data.get("productVideo");
 
     //This function returns the uploaded status of the image and video
     const imageData = await imageUpload(productImage);
-    const videoData = await videoUpload(productVideo);
+    // const videoData = await videoUpload(productVideo);
     console.log("image and video is being added to the cloud");
     console.log("item is being added to the database");
     const addedItems = await await Cart.create({
@@ -74,7 +74,8 @@ export const POST = async (request) => {
       productDescription,
       productCategory,
       productImage: imageData.secure_url,
-      prodcutVideo: videoData.secure_url,
+      // prodcutVideo: videoData.secure_url,
+      prodcutVideo: "ziyaan ahmed",
     });
     console.log("item is added to the database");
     return NextResponse.json(
