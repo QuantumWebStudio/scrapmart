@@ -7,37 +7,31 @@ import { useEffect, useState } from "react";
 
 const CartPage = () => {
   const router = useRouter();
-
   const [cartDetail, setCartDetail] = useState([]);
+  const [isUpdated, setIsUpdated] = useState(false); // New state variable
 
-  //this is used to fetch data from the api
+  // Fetching data from the API
   const fetchCartApi = async () => {
-
     try {
-      const response = await axios.get(`/api/cart`, {
+      console.log("Fetching cart data...");
+      const response = await axios.get("/api/cart", {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      const data = await response.data;
-      console.log("FROM DATA",data.cartDetails)
-      setCartDetail(data.cartDetails)
-      console.log("FROM FETCH API SETCART",data.cartDetails)
+      const data = response.data;
+      setCartDetail(data.cartDetails);
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching cart data:", error);
     }
   };
 
-  //helps to fetch  data from the api when the component mountsa
-
+  // Fetch cart data on initial load and when isUpdated changes
   useEffect(() => {
     fetchCartApi();
-    console.log("FROM USE EFFECT",cartDetail)
-  }, []);
+  }, [isUpdated]); // Now we depend on isUpdated
 
-  console.log("from body",cartDetail);
-
-  //this is used to remove a single item from the cart
+  // This function can be called after any actions like adding/removing items
   const handleRemoveItem = async (cartId) => {
     try {
       const response = await axios.delete(`/api/cart/${cartId}`, {
@@ -46,11 +40,11 @@ const CartPage = () => {
         },
       });
       alert(response.data.msg);
-      fetchCartApi();
-      console.log(response.data);
+      
+      // Set isUpdated to true to refetch the data
+      setIsUpdated(prev => !prev); // Toggle the state to trigger useEffect
     } catch (error) {
-      alert(error.data.msg);
-      console.log(error);
+      alert("Error removing item:", error.message);
     }
   };
 
@@ -59,23 +53,17 @@ const CartPage = () => {
       <h1 className="text-center sm:text-xl">
         Total items in cart {cartDetail.length}
       </h1>
-      <div className="grid grid-cols-1  py-4 sm:px-3 place-items-center lg:grid-cols-2 gap-1 sm:gap-2">
+      <div className="grid grid-cols-1 py-4 sm:px-3 place-items-center lg:grid-cols-2 gap-1 sm:gap-2">
         {cartDetail.map((item, index) => (
           <CartDetails cart={item} key={index} remove={handleRemoveItem} />
         ))}
       </div>
 
       <div className="flex justify-center items-center gap-2">
-        <button
-          className="px-1 border"
-          onClick={() => router.push("/products")}
-        >
+        <button className="px-1 border" onClick={() => router.push("/products")}>
           Continue Shopping
         </button>
-        <button
-          className="border px-1"
-          onClick={() => router.push("/checkout")}
-        >
+        <button className="border px-1" onClick={() => router.push("/checkout")}>
           Proceed Checkout
         </button>
       </div>
