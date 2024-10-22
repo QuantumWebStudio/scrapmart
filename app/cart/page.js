@@ -19,7 +19,7 @@ const CartPage = () => {
           "Content-Type": "application/json",
         },
       });
-      const data = response.data;
+      const data = await response.data;
       console.log("FROM DATA",data.cartDetails)
       setCartDetail(data.cartDetails)
       console.log("FROM FETCH API SETCART",data.cartDetails)
