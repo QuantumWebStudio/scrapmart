@@ -20,7 +20,9 @@ const CartPage = () => {
         },
       });
       const data = response.data;
+      console.log("FROM DATA",data.cartDetails)
       setCartDetail(data.cartDetails)
+      console.log("FROM FETCH API SETCART",data.cartDetails)
     } catch (error) {
       console.error(error);
     }
@@ -30,9 +32,10 @@ const CartPage = () => {
 
   useEffect(() => {
     fetchCartApi();
+    console.log("FROM USE EFFECT",cartDetail)
   }, []);
 
-  console.log(cartDetail);
+  console.log("from body",cartDetail);
 
   //this is used to remove a single item from the cart
   const handleRemoveItem = async (cartId) => {
