@@ -11,12 +11,7 @@ const CartPage = () => {
   const [cartDetail, setCartDetail] = useState([]);
 
   //this is used to fetch data from the api
-  
-
-  //helps to fetch  data from the api when the component mounts
-
-  useEffect(() => {
-    const fetchCartApi = async () => {
+  const fetchCartApi = async () => {
     alert("The page refreshed")
     try {
       const response = await axios.get(`api/cart`, {
@@ -32,7 +27,11 @@ const CartPage = () => {
       
     }
   };
-  fetchCartApi();
+
+  //helps to fetch  data from the api when the component mounts
+
+  useEffect(() => {
+    fetchCartApi();
   }, []);
 
   console.log(cartDetail);
