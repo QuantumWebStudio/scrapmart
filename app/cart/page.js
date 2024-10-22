@@ -14,7 +14,7 @@ const CartPage = () => {
   const fetchCartApi = async () => {
 
     try {
-      const response = await axios.get(`api/cart`, {
+      const response = await axios.get(`/api/cart`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -26,7 +26,7 @@ const CartPage = () => {
     }
   };
 
-  //helps to fetch  data from the api when the component mounts
+  //helps to fetch  data from the api when the component mountsa
 
   useEffect(() => {
     fetchCartApi();
