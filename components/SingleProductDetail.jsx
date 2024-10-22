@@ -11,23 +11,19 @@ const SingleProductDetail = ({ product }) => {
   const [Unit, setUnit] = useState("KG"); // Default to "KG", can remain as is
   const [Description, setDescription] = useState(""); // Initial state is an empty string
   const [ProductImage, setProductImage] = useState(null);
-  // const [ProductVideo, setProductVideo] = useState(null);
 
   const sendBackend = async (formData) => {
     try {
-      alert("Sending req");
-
       const response = await axios.post(`/api/product/${productid}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      alert("REQ sent");
+
       const data = await response.data;
       console.log("FROM DATA", data.msg);
       alert(data.msg);
-      if (response.status === 200) {
-        alert("from data");
+      if (data.status === 200) {
         router.push("/cart");
       }
     } catch (err) {
@@ -36,12 +32,8 @@ const SingleProductDetail = ({ product }) => {
     }
   };
 
-  const sendToCart = (e) => {
-    e.preventDefault();
-    alert("button clicked");
-
+  const sendToCart = () => {
     //This is used to create a from data  object to send it to backend
-    alert("loading");
     const formData = new FormData();
     formData.append("productId", product._id);
     formData.append("productName", product.productName);
@@ -50,18 +42,18 @@ const SingleProductDetail = ({ product }) => {
     formData.append("productUnit", Unit);
     formData.append("productPrice", product.productPrice);
     formData.append("productDescription", Description);
-
     if (ProductImage) {
       formData.append("productImage", ProductImage);
+      alert("Please Wait");
+    } else {
+      alert("upload the image");
     }
-    // if (ProductVideo) {
-    //   formData.append("productVideo", ProductVideo);
-    // }
-    alert("Form data has been loadded");
+
     //This is used to send the data from frontend to backend
     sendBackend(formData);
   };
 
+  //this is used to save the item details to the localStorage and it will be accessed in the checkout page and once the order is confrimed  it will be deleted
   const sendToCheckout = () => {
     alert("button clicked");
 
@@ -73,9 +65,8 @@ const SingleProductDetail = ({ product }) => {
     localStorage.setItem("productUnit", Unit);
     localStorage.setItem("productDescription", Description);
     localStorage.setItem("productImage", ProductImage);
-    // localStorage.setItem("productVideo", ProductVideo);
     localStorage.setItem("productPrice", product.productPrice);
-    router.push("/checkout")
+    router.push("/checkout");
   };
 
   return (
@@ -83,7 +74,7 @@ const SingleProductDetail = ({ product }) => {
       <form className="space-y-4">
         <div>
           <label
-            htmlFor="name"
+            htmlFor="productName"
             className="block text-sm font-medium text-gray-700"
           >
             Name
@@ -99,7 +90,7 @@ const SingleProductDetail = ({ product }) => {
 
         <div>
           <label
-            htmlFor="category"
+            htmlFor="productCategory"
             className="block text-sm font-medium text-gray-700"
           >
             Category
@@ -124,9 +115,9 @@ const SingleProductDetail = ({ product }) => {
             type="number"
             id="Quantity"
             min={0}
+            required
             value={Quantity} // Controlled input
             onChange={(e) => setQuantity(e.target.value)} // Convert to number
-            required
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
         </div>
@@ -140,6 +131,7 @@ const SingleProductDetail = ({ product }) => {
           </label>
           <select
             id="Unit"
+            required
             value={Unit} // Controlled input
             onChange={(e) => setUnit(e.target.value)}
             className="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
@@ -174,6 +166,7 @@ const SingleProductDetail = ({ product }) => {
           </label>
           <input
             type="file"
+            required
             id="ProductImage"
             accept="image/*"
             onChange={(e) => setProductImage(e.target.files[0])}
@@ -181,26 +174,10 @@ const SingleProductDetail = ({ product }) => {
           />
         </div>
 
-        {/* <div>
-          <label
-            htmlFor="ProductVideo"
-            className="block text-sm font-medium text-black"
-          >
-            Upload Video
-          </label>
-          <input
-            type="file"
-            id="ProductVideo"
-            accept="video/*"
-            onChange={(e) => setProductVideo(e.target.files[0])}
-            className="mt-1 block w-full px-3 py-2 bg-black bg-opacity-50 border border-transparent rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
-          />
-        </div> */}
-
         <div className="flex justify-center items-center space-x-4">
           <button
-            onClick={(e) => {
-              sendToCart(e);
+            onClick={() => {
+              sendToCart();
             }}
             className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >

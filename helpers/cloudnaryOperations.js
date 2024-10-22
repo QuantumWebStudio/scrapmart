@@ -23,6 +23,8 @@ const videoUpload = async (file) => {
   });
 
 };
+//REMOVEED  THE VIDEO UPLOAD FUNCTIONALITY FROM THE BUTTON CLICK EVENT
+
 
 //Used to upload the image file to the cloudinary
 const imageUpload = async (file) => {

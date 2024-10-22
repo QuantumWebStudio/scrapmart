@@ -8,8 +8,7 @@ import Cart from "@model/cartModel";
 
 export const DELETE = async (request, { params }) => {
     try {
-      const { cartId } = params; // Access the dynamic productId from the URL
-      ``
+      const { cartId}  = params; // Access the dynamic productId from the URL
       const removedItem = await Cart.findByIdAndDelete(cartId);
 
       if(!removedItem){

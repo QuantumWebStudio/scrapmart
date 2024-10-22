@@ -13,6 +13,8 @@ const SingleProductPage = () => {
   //This is used to extract the dynamic id from the url
   const { productid } = useParams();
 
+
+  //This is used to fetch the single product data from the api
   const fetchSingleProduct = async (productid) => {
     const response = await axios.get(`/api/product/${productid}`, {
       headers: {

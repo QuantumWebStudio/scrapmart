@@ -12,14 +12,24 @@ const CartPage = () => {
 
   //this is used to fetch data from the api
   const fetchCartApi = async () => {
-    const response = await axios.get(`api/cart`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = response.data;
-    setCartDetail(data.cartDetails);
+    alert("The page refreshed")
+    try {
+      const response = await axios.get(`api/cart`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = response.data;
+      setCartDetail(data.cartDetails);
+      
+    } catch (error) {
+      console.error(error);
+      
+    }
   };
+
+  //helps to fetch  data from the api when the component mounts
+
   useEffect(() => {
     fetchCartApi();
   }, []);
@@ -42,11 +52,10 @@ const CartPage = () => {
       console.log(error);
     }
   };
+
   return (
     <section className="h-auto py-3">
-      <h1 className="text-center sm:text-xl">
-        Total Items in Cart: {cartDetail.length}
-      </h1>
+      <h1 className="text-center sm:text-xl">Total items in cart {cartDetail.length}</h1>
       <div className="grid grid-cols-1  py-4 sm:px-3 place-items-center lg:grid-cols-2 gap-1 sm:gap-2">
         {cartDetail.map((item, index) => (
           <CartDetails cart={item} key={index} remove={handleRemoveItem} />
@@ -64,7 +73,7 @@ const CartPage = () => {
           className="border px-1"
           onClick={() => router.push("/checkout")}
         >
-          Proceed CheckOut
+          Proceed Checkout
         </button>
       </div>
     </section>

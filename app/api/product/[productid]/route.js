@@ -7,7 +7,7 @@ import Cart from "@model/cartModel";
 import { connectCloudinary } from "@utils/connectCloudnary";
 
 //This is used to upload the files into the cloudinary and the uploaded url is stored in the cart database
-import { videoUpload, imageUpload } from "@helpers/cloudnaryOperations";
+import { imageUpload } from "@helpers/cloudnaryOperations";
 
 // Ensure the database is connected
 connectToDatabase();
@@ -48,7 +48,7 @@ export const POST = async (request) => {
     //this call is done to connect with the cloudinary platform
     connectCloudinary();
 
-    //Extracting or dsctructring the variables inside the formData
+    //Extracting or desctructring the variables inside the formData
     const data = await request.formData();
     const productName = data.get("productName");
     const productCategory = data.get("productCategory");
@@ -58,12 +58,11 @@ export const POST = async (request) => {
     const productId = data.get("productId");
     const productPrice = data.get("productPrice");
     const productImage = data.get("productImage");
-    // const productVideo = data.get("productVideo");
 
     //This function returns the uploaded status of the image and video
     const imageData = await imageUpload(productImage);
-    // const videoData = await videoUpload(productVideo);
-    console.log("image and video is being added to the cloud");
+
+    console.log("image is being added to the cloud");
     console.log("item is being added to the database");
     const addedItems = await await Cart.create({
       productId,
@@ -74,8 +73,6 @@ export const POST = async (request) => {
       productDescription,
       productCategory,
       productImage: imageData.secure_url,
-      // prodcutVideo: videoData.secure_url,
-      prodcutVideo: "ziyaan ahmed",
     });
     console.log("item is added to the database");
     return NextResponse.json(
