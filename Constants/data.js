@@ -1,7 +1,7 @@
 export const ProductCategory = [
   {
-    name: "All Items",
-    lable: "All Items",
+    name: "All",
+    lable: "ALL",
     id: 1,
   },
   {

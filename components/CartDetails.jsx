@@ -9,11 +9,11 @@ import { cartDetail } from "@Constants/data";
 
 // this fucntion is used to display individual cart items in the page by feching from the API
 
-const CartDetails = ({ cart, remove,image }) => {
+const CartDetails = ({ cart, remove }) => {
   return (
     <div className=" border flex flex-row   justify-center items-center">
       {/* This div contains the image and video of the  cart item */}
-      <CartImagePreview image={cart.productImage}/>
+      <CartImagePreview image={cart.productImage} />
 
       <div className=" flex flex-col justify-start items-center gap-2 rounded-md sm:h-[300px] h-[200px]  w-[150px]  sm:w-[230px] lg:w-[250px] text-sm sm:text-lg ">
         <div className="px-3 py-2 h-auto">

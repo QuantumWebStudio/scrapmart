@@ -2,55 +2,24 @@
 import CategoriesListTab from "@components/CategoriesListTab";
 import DisplayProductTab from "@components/DisplayProductTab";
 import { useState, useEffect } from "react";
-
-import axios from "axios";
+import { useProductStore } from "@store/ProductStore";
 
 const ProductsPage = () => {
-  const [categorySelected, setCategory] = useState("All Items");
-  const [filteredProducts, setFiteredProducts] = useState([]);
-  const [allProducts, setAllProducts] = useState([]);
+  const [categorySelected, setCategory] = useState("All");
 
-  //This is the function that fetches the data from the API
+  //This all comes from the product Store.
+  const { fetchProducts, filteredProducts, filterProduct } = useProductStore();
 
-  const fetchFromApi = async () => {
-    try {
-      const res = await axios.get(`/api/products`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await res.data;
-
-      //assigning the data from the api to local variable
-      setFiteredProducts(data.ProductDetails);
-      setAllProducts(data.ProductDetails);
-    } catch (error) {
-      console.error("FROM ERROR", error);
-    }
-  };
-
+  //This function is used whenEver the page is loaded or mounded or reloaded
   useEffect(() => {
     //API fetch call
-    fetchFromApi();
+    fetchProducts();
   }, []);
-
-  // This function is used to filter the products from the data base so that we can show onl the selected category items
-  const FilterProducts = (categoryFilter) => {
-    if (categoryFilter === "All Items") {
-      setFiteredProducts(allProducts);
-    } else {
-      const productFiltered = allProducts.filter(
-        (product) => product.productCategory === categoryFilter
-      );
-      setFiteredProducts(productFiltered);
-    }
-  };
   // This function is used to select the category from the page.
   const selectCategory = (category) => {
     setCategory(category);
-    FilterProducts(category);
+    filterProduct(category);
   };
-  
 
   return (
     <section>

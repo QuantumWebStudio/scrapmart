@@ -1,40 +1,22 @@
 "use client";
 
-import axios from "axios";
+import { useSingleProductStore } from "@store/SingleProductStore";
 import { useRouter, useParams } from "next/navigation";
 import { useState } from "react";
 
 const SingleProductDetail = ({ product }) => {
-  const { productid } = useParams();
   const router = useRouter();
+
+  const { addItem, addCheckout } = useSingleProductStore();
+
+  const { productid } = useParams();
+
   const [Quantity, setQuantity] = useState(1); // Default to 0, can remain as is
   const [Unit, setUnit] = useState("KG"); // Default to "KG", can remain as is
   const [Description, setDescription] = useState(""); // Initial state is an empty string
-  const [ProductImage, setProductImage] = useState(null);
+  const [ProductImage, setProductImage] = useState(null); //This is used to set the image
 
-  const sendBackend = async (formData) => {
-    try {
-      const response = await axios.post(`/api/product/${productid}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      const data = await response.data;
-      
-      console.log("FROM DATA", data);
-
-      alert(data.msg);
-      if (data.stat === 1) {
-        router.push("/cart");
-      }
-    } catch (err) {
-      console.error("Frm err", err);
-      alert(`from catch ${err}`);
-    }
-  };
-
-  const sendToCart = () => {
+  const sendToCart = async () => {
     //This is used to create a from data  object to send it to backend
     const formData = new FormData();
     formData.append("productId", product._id);
@@ -52,22 +34,35 @@ const SingleProductDetail = ({ product }) => {
     }
 
     //This is used to send the data from frontend to backend
-    sendBackend(formData);
+    const stat = await addItem(productid, formData);
+    if (stat === 1) {
+      router.push("/cart");
+    }
   };
 
-  //this is used to save the item details to the localStorage and it will be accessed in the checkout page and once the order is confrimed  it will be deleted
+  //This is used to send the details to the checkout page .
   const sendToCheckout = () => {
-    alert("button clicked");
+    const formData = new FormData();
+    formData.append("productId", product._id);
+    formData.append("productName", product.productName);
+    formData.append("productCategory", product.productCategory);
+    formData.append("productQuantity", Quantity);
+    formData.append("productUnit", Unit);
+    formData.append("productPrice", product.productPrice);
+    formData.append("productDescription", Description);
+    if (ProductImage) {
+      formData.append("productImage", ProductImage);
+      alert("Please Wait");
+    } else {
+      alert("upload the image");
+    }
 
-    //The data will be stored in the local storage and will be accessed in the checkout page. As soon as the order is placed the localstorage data will be erased. just for the timing am using this. I will find  a better way to do this.
-    localStorage.setItem("productId", product._id);
-    localStorage.setItem("productName", product.productName);
-    localStorage.setItem("productCategory", product.productCategory);
-    localStorage.setItem("productQuantity", Quantity);
-    localStorage.setItem("productUnit", Unit);
-    localStorage.setItem("productDescription", Description);
-    localStorage.setItem("productImage", ProductImage);
-    localStorage.setItem("productPrice", product.productPrice);
+    formData.forEach((value, key) => {
+      console.log(`${key}: ${value}`);
+    });
+
+    alert("button clicked");
+    addCheckout(formData, ProductImage);
     router.push("/checkout");
   };
 
@@ -179,7 +174,7 @@ const SingleProductDetail = ({ product }) => {
 
         <div className="flex justify-center items-center space-x-4">
           <button
-          type="button"
+            type="button"
             onClick={() => {
               sendToCart();
             }}

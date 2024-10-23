@@ -1,32 +1,22 @@
 "use client";
 import ProductImagePreview from "@components/ProductImagePreview";
 import SingleProductDetail from "@components/SingleProductDetail";
-import axios from "axios";
+import { useSingleProductStore } from "@store/SingleProductStore";
 import { useParams } from "next/navigation";
 
 import { useEffect, useState } from "react";
 
 const SingleProductPage = () => {
-  const [singleProduct, setSingleProduct] = useState({});
+  
+  const {fetchSingleItem ,singleProduct}=useSingleProductStore()
+  
+  
   
 
   //This is used to extract the dynamic id from the url
   const { productid } = useParams();
-
-
-  //This is used to fetch the single product data from the api
-  const fetchSingleProduct = async (productid) => {
-    const response = await axios.get(`/api/product/${productid}`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.data;
-    setSingleProduct(data.singleProductDetail);
-  };
-
   useEffect(() => {
-    fetchSingleProduct(productid);
+    fetchSingleItem(productid);
   }, []);
 
   return (

@@ -90,9 +90,8 @@ export const POST = async (request) => {
     // Return a 500 error response if there's an internal server error
     return NextResponse.json(
       {
-        msg: "Could not add item to cart",
+        msg: error,
         stat:0,
-        error
       },
       
     );
