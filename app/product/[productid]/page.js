@@ -4,14 +4,10 @@ import SingleProductDetail from "@components/SingleProductDetail";
 import { useSingleProductStore } from "@store/SingleProductStore";
 import { useParams } from "next/navigation";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const SingleProductPage = () => {
-  
-  const {fetchSingleItem ,singleProduct}=useSingleProductStore()
-  
-  
-  
+  const { fetchSingleItem, singleProduct } = useSingleProductStore();
 
   //This is used to extract the dynamic id from the url
   const { productid } = useParams();

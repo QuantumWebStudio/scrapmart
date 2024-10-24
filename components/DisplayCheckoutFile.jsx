@@ -10,16 +10,14 @@ const DisplayCheckoutFile = () => {
   }, []);
   console.log("Checkout", image);
   return (
-    <div className="border flex justify-center items-center w-1/2 h-full text-center">
-      <div className="h-1/2 w-full border">
+    <div className=" flex justify-center items-center w-full sm:w-1/2  h-full text-center">
+      <div className=" w-full sm:h-1/2 h-full sm:w-1/2">
         {checkoutImage && (
-          <div>
-            <img
-              src={URL.createObjectURL(image)}
-              className=""
-              alt="Uploaded File"
-            />
-          </div>
+          <img
+            src={URL.createObjectURL(image)}
+            className="sm:w-full rounded-lg  sm:h-full object-cover"
+            alt="Uploaded File"
+          />
         )}
       </div>
     </div>

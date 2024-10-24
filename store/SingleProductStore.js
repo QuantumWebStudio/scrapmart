@@ -39,6 +39,7 @@ export const useSingleProductStore = create((set) => ({
     }
   },
   addCheckout: (formData, image) => {
-    set({ checkoutImage: image, CheckoutList: formData });
+
+    set({ checkoutImage: image, CheckoutList: formData});
   },
 }));

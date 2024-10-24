@@ -17,6 +17,10 @@ const SingleProductDetail = ({ product }) => {
   const [ProductImage, setProductImage] = useState(null); //This is used to set the image
 
   const sendToCart = async () => {
+    if (!Quantity || !Unit || !Description || !ProductImage) {
+      alert("PLEASE ENTER ALL THE DETAIL");
+      return;
+    }
     //This is used to create a from data  object to send it to backend
     const formData = new FormData();
     formData.append("productId", product._id);
@@ -42,6 +46,10 @@ const SingleProductDetail = ({ product }) => {
 
   //This is used to send the details to the checkout page .
   const sendToCheckout = () => {
+    if (!Quantity || !Unit || !Description || !ProductImage) {
+      alert("PLEASE ENTER ALL THE DETAIL");
+      return;
+    }
     const formData = new FormData();
     formData.append("productId", product._id);
     formData.append("productName", product.productName);
@@ -56,12 +64,6 @@ const SingleProductDetail = ({ product }) => {
     } else {
       alert("upload the image");
     }
-
-    formData.forEach((value, key) => {
-      console.log(`${key}: ${value}`);
-    });
-
-    alert("button clicked");
     addCheckout(formData, ProductImage);
     router.push("/checkout");
   };
