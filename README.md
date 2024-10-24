@@ -1,20 +1,56 @@
-This is created using NextJs 14,TailwindCS MongoDB etc.
+# Scrapmart
+
+A marketplace where users can sell scrap materials from their house or locality at competitive prices. This application connects users with professionals who will pick up the scrap materials and pay them in real-time, either through digital cash (e.g., G-Pay) or physical cash. Scrap prices fluctuate based on the market price, which is updated daily at 9:00 AM IST.
+
+## Table of Contents
+
+- [Project Overview](#project-overview)
+- [Technologies Used](#technologies-used)
+- [Features](#features)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Project Overview
+
+Scrapmart allows users to:
+- Create an account and log in.
+- Upload images of scrap materials.
+- Provide detailed descriptions of the scrap (e.g., material type, weight, condition).
+- Get real-time pricing based on the fluctuating market.
+- Schedule professional scrap pickup at their location.
+
+## Technologies Used
+
+- **Next.js 14**: For building a highly optimized React-based frontend and backend.
+- **Tailwind CSS**: For building responsive and modern UI.
+- **MongoDB**: For database storage and managing user and scrap data.
+- **Cloudinary**: For handling image uploads of scrap materials.
+- **Node.js**: For backend API services.
+- **Zod**: For schema validation.
 
 
-DESCRIPTION:
+## Features
 
-    A scrapmart is a markert place where users can sell scrap materials that are available at their house or locality for a better price. The application allows users to create an account, login, upload images of scrap materials, add details about the scrap material. Based on the loaction of the user and the condition of the scrap the scrapmart professional pickup agents will arive at your door sept and collect the scrap and give a amount in real time whether its digital cash (G-PAY etc) or physical cash. The best part is that the amount of all the scrap will be fluctuating based on the market price everyday at 9:00 AM IST. 
+- **Account Management**: Users can register, log in, and manage their profile.
+- **Scrap Listings**: Upload images and details about the scrap, including the condition and type.
+- **Price Fluctuation**: Scrap prices fluctuate based on the market, updated daily at 9:00 AM IST.
+- **Location-based Pickup**: Scrap professionals arrive at the user’s location for collection.
+- **Real-time Payment**: Users can receive payments via digital or physical cash.
 
-About the Project Structure:
-    This project contains  the following folders and files:
-    - components: This folder contains all the reusable UI components used throughout the application.
-    - app: This folder contains all the pages of the application as well as nested pages of the application.
-    - models: This folder contains all the database models used throughout the application.
-    
-    - public: This folder contains all the static files used throughout the application.
-    - utils: This folder contains all the utility functions used throughout the application.
-    - helper: This folder contains all the API services used throughout the application.
-    
+## Project Structure
 
+The project is organized as follows:
 
+### Key Directories
+
+- **`/components`**: Contains reusable UI components such as buttons, forms, modals, etc.
+- **`/app`**: Contains all the pages of the application, with routing logic.
+- **`/models`**: Database schemas for managing MongoDB collections.
+- **`/store`**: Manages the global state using Next.js or a state management tool like Redux.
+- **`/public`**: Static files like images, logos, etc., that are publicly accessible.
+- **`/utils`**: Utility functions, such as price calculation, date formatting, etc.
+- **`/helper`**: Handles API service communication and other asynchronous operations.
 
