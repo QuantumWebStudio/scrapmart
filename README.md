@@ -47,6 +47,7 @@ The project is organized as follows:
 ### Key Directories
 
 - **`/components`**: Contains reusable UI components such as buttons, forms, modals, etc.
+- **`/api`**: Contains all the backend code for the  application, including API routes and database interactions.
 - **`/app`**: Contains all the pages of the application, with routing logic.
 - **`/models`**: Database schemas for managing MongoDB collections.
 - **`/store`**: Manages the global state using Next.js or a state management tool like Redux.
